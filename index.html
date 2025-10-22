@@ -1,0 +1,683 @@
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Usama Diagnostic Center</title>
+
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+
+
+
+
+    <style>
+
+        body {
+
+            font-family: 'Inter', sans-serif;
+
+            -webkit-font-smoothing: antialiased;
+
+            -moz-osx-font-smoothing: grayscale;
+
+        }
+
+        .perspective-container {
+
+            perspective: 1000px;
+
+        }
+
+        .transform-card {
+
+            transform-style: preserve-3d;
+
+            transition: transform 0.1s ease-out;
+
+            box-shadow: 0 0 25px rgba(79, 70, 229, 0.3), 0 0 50px rgba(255, 255, 255, 0.05);
+
+        }
+
+        /* Custom scrollbar for better aesthetics */
+
+        ::-webkit-scrollbar {
+
+            width: 8px;
+
+        }
+
+        ::-webkit-scrollbar-track {
+
+            background: #1e293b; /* slate-800 */
+
+        }
+
+        ::-webkit-scrollbar-thumb {
+
+            background: #4f46e5; /* indigo-600 */
+
+            border-radius: 4px;
+
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+
+            background: #6366f1; /* indigo-500 */
+
+        }
+
+    </style>
+
+</head>
+
+<body class="bg-slate-900 text-white flex items-center justify-center min-h-screen p-4">
+
+
+
+    <div id="container" class="perspective-container w-full h-full flex items-center justify-center">
+
+
+
+        <div id="card" class="transform-card w-full max-w-4xl bg-slate-800/40 backdrop-blur-xl border border-slate-700 rounded-2xl p-8 max-h-[90vh] overflow-y-auto">
+
+
+
+            <div class="text-center mb-8">
+
+                <h1 class="text-3xl font-bold text-white mb-2">Usama Diagnostic Center</h1>
+
+                <p class="text-slate-400 font-bold italic">Your Care is Our Top Priority</p>
+
+                <hr class="mt-4 border-slate-700">
+
+            </div>
+
+
+
+            <form id="report-form" class="space-y-6">
+
+
+
+                <fieldset class="border border-slate-700 p-4 rounded-lg">
+
+                    <legend class="px-2 text-indigo-400 font-semibold">Patient & Doctor Information</legend>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                        <input type="text" id="patient-name" placeholder="Patient Full Name" required class="w-full px-4 py-3 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                        <input type="number" id="patient-age" placeholder="Patient Age" required class="w-full px-4 py-3 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                        <input type="text" id="patient-gender" placeholder="Patient Gender" required class="w-full px-4 py-3 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                        <input type="text" id="referring-doctor" placeholder="Referring Doctor" required class="w-full px-4 py-3 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                    </div>
+
+                </fieldset>
+
+
+
+                 <fieldset class="border border-slate-700 p-4 rounded-lg">
+
+                    <legend class="px-2 text-indigo-400 font-semibold">Report Details</legend>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                        <div>
+
+                           <label class="text-sm text-slate-400">Collection Date</label>
+
+                           <input type="date" id="collection-date" required class="w-full px-4 py-3 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                        </div>
+
+                        <div>
+
+                             <label class="text-sm text-slate-400">Report Date</label>
+
+                             <input type="date" id="report-date" required class="w-full px-4 py-3 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                        </div>
+
+                    </div>
+
+                </fieldset>
+
+
+
+                <hr class="border-slate-700">
+
+
+
+                <fieldset class="border border-slate-700 p-4 rounded-lg">
+
+                    <legend class="px-2 text-indigo-400 font-semibold">Test Results</legend>
+
+                    <div id="test-results-container" class="space-y-3">
+
+                        <div class="grid grid-cols-1 sm:grid-cols-11 gap-2 test-row items-center">
+
+                            <input type="text" name="test-name" placeholder="Test Name" required class="sm:col-span-3 w-full px-3 py-2 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                            <input type="text" name="test-result" placeholder="Result" required class="sm:col-span-2 w-full px-3 py-2 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                            <input type="text" name="test-unit" placeholder="Unit" class="sm:col-span-2 w-full px-3 py-2 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                            <input type="text" name="test-range" placeholder="Reference Range" class="sm:col-span-3 w-full px-3 py-2 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                            <div class="sm:col-span-1"></div>
+
+                        </div>
+
+                    </div>
+
+                    <button type="button" id="add-test-btn" class="mt-4 bg-slate-700 hover:bg-slate-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">
+
+                        + Add Another Test
+
+                    </button>
+
+                </fieldset>
+
+
+
+                <div class="pt-4">
+
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105">
+
+                        Generate PDF Report
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        // --- UI Logic: 3D Effect, Dynamic Form, and Date Defaults ---
+
+        const container = document.getElementById('container');
+
+        const card = document.getElementById('card');
+
+        const addTestBtn = document.getElementById('add-test-btn');
+
+        const testResultsContainer = document.getElementById('test-results-container');
+
+        const reportForm = document.getElementById('report-form');
+
+
+
+        // Set default dates to today
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const today = new Date().toISOString().split('T')[0];
+
+            document.getElementById('collection-date').value = today;
+
+            document.getElementById('report-date').value = today;
+
+        });
+
+
+
+        // 3D Card mouse-move effect
+
+        container.addEventListener('mousemove', (e) => {
+
+            const x = e.clientX - container.offsetLeft - container.offsetWidth / 2;
+
+            const y = e.clientY - container.offsetTop - container.offsetHeight / 2;
+
+            const rotateY = (x / (container.offsetWidth / 2)) * 10;
+
+            const rotateX = -(y / (container.offsetHeight / 2)) * 8;
+
+            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+        });
+
+
+
+        container.addEventListener('mouseleave', () => {
+
+            card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+
+        });
+
+
+
+        // Add new test row
+
+        addTestBtn.addEventListener('click', () => {
+
+            const newRow = document.createElement('div');
+
+            newRow.className = 'grid grid-cols-1 sm:grid-cols-11 gap-2 test-row items-center';
+
+            newRow.innerHTML = `
+
+                <input type="text" name="test-name" placeholder="Test Name" required class="sm:col-span-3 w-full px-3 py-2 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                <input type="text" name="test-result" placeholder="Result" required class="sm:col-span-2 w-full px-3 py-2 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                <input type="text" name="test-unit" placeholder="Unit" class="sm:col-span-2 w-full px-3 py-2 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                <input type="text" name="test-range" placeholder="Reference Range" class="sm:col-span-3 w-full px-3 py-2 bg-slate-900/70 border border-slate-700 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                <button type="button" class="sm:col-span-1 text-red-500 hover:text-red-400 remove-test-btn p-2 rounded-full flex items-center justify-center">
+
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+
+                </button>
+
+            `;
+
+            testResultsContainer.appendChild(newRow);
+
+        });
+
+
+
+        // Remove test row
+
+        testResultsContainer.addEventListener('click', (e) => {
+
+            if (e.target.closest('.remove-test-btn')) {
+
+                e.target.closest('.test-row').remove();
+
+            }
+
+        });
+
+
+
+        // --- PDF Generation Logic ---
+
+        reportForm.addEventListener('submit', (e) => {
+
+            e.preventDefault();
+
+            generatePDF();
+
+        });
+
+
+
+        function generatePDF() {
+
+            const { jsPDF } = window.jspdf;
+
+            const doc = new jsPDF();
+
+
+
+            // --- Helper function to add the footer to each page ---
+
+            const addFooter = () => {
+
+                const pageHeight = doc.internal.pageSize.getHeight();
+
+                const pageWidth = doc.internal.pageSize.getWidth();
+
+
+
+                // MODIFICATION: Adjusted Y positions for the new line
+
+                const regInfoY = pageHeight - 8;
+
+                const qualificationsY = regInfoY - 5;
+
+                const namesY = qualificationsY - 5;
+
+                const lineY = namesY - 6;
+
+                const messageY = lineY - 5;
+
+               
+
+                doc.setTextColor(255, 0, 0); // Red
+
+                doc.setFont('helvetica', 'bolditalic'); // Bold and Italic
+
+                doc.setFontSize(10);
+
+                doc.text("Computer Generated Lab Reports Don't Need Any Signature", pageWidth / 2, messageY, { align: 'center' });
+
+
+
+                doc.setTextColor(0, 0, 0); // Black
+
+                doc.setFont('helvetica', 'normal');
+
+                doc.setLineWidth(0.2);
+
+                doc.line(15, lineY, pageWidth - 15, lineY);
+
+               
+
+                // Doctor Names
+
+                doc.setFont('helvetica', 'bold');
+
+                doc.setFontSize(9);
+
+                const doc1_name = "Dr. Atta Ullah Shb";
+
+                const doc2_name = "Mr. Usama Zakir";
+
+                const doc3_name = "Dr. Asad";
+
+                doc.text(doc1_name, 15, namesY, { align: 'left' });
+
+                doc.text(doc2_name, pageWidth / 2, namesY, { align: 'center' });
+
+                doc.text(doc3_name, pageWidth - 15, namesY, { align: 'right' });
+
+
+
+                // Doctor Qualifications
+
+                doc.setFont('helvetica', 'normal');
+
+                doc.setFontSize(8);
+
+                const doc1_qual = "(MBBS, FCPS)";
+
+                const doc2_qual = "(BSIT, LAB Tech, Dispenser Tech)";
+
+                const doc3_qual = "(Pathologist, Lab Tech)";
+
+                doc.text(doc1_qual, 15, qualificationsY, { align: 'left' });
+
+                doc.text(doc2_qual, pageWidth / 2, qualificationsY, { align: 'center' });
+
+                doc.text(doc3_qual, pageWidth - 15, qualificationsY, { align: 'right' });
+
+
+
+                // MODIFICATION: Add new line for registration/university info
+
+                const doc1_reg = "PMDC Registered";
+
+                const doc2_reg = "PMF Registered";
+
+                const doc3_reg = "Uni Of Okara";
+
+                doc.text(doc1_reg, 15, regInfoY, { align: 'left' });
+
+                doc.text(doc2_reg, pageWidth / 2, regInfoY, { align: 'center' });
+
+                doc.text(doc3_reg, pageWidth - 15, regInfoY, { align: 'right' });
+
+            };
+
+           
+
+            // --- Get Form Data ---
+
+            const patientName = document.getElementById('patient-name').value;
+
+            const patientAge = document.getElementById('patient-age').value;
+
+            const patientGender = document.getElementById('patient-gender').value;
+
+            const referringDoctor = document.getElementById('referring-doctor').value;
+
+            const collectionDate = document.getElementById('collection-date').value;
+
+            const reportDate = document.getElementById('report-date').value;
+
+
+
+            // --- PDF Header ---
+
+           
+
+            doc.setTextColor(255, 0, 0); // Red color for H1
+
+            doc.setFont('arial', 'bold');
+
+            doc.setFontSize(20);
+
+            doc.text("Usama Diagnostic Center", 105, 20, { align: 'center' });
+
+           
+
+            // Email line
+
+            const emailLabel = "Email Address : ";
+
+            const emailValue = "usamazakir5033@gmail.com";
+
+            const yPosEmail = 26;
+
+            const fontSizeContact = 10;
+
+            doc.setFontSize(fontSizeContact);
+
+            doc.setFont('helvetica', 'bold');
+
+
+
+            const emailLabelWidth = doc.getStringUnitWidth(emailLabel) * fontSizeContact / doc.internal.scaleFactor;
+
+            const emailValueWidth = doc.getStringUnitWidth(emailValue) * fontSizeContact / doc.internal.scaleFactor;
+
+            const totalEmailWidth = emailLabelWidth + emailValueWidth;
+
+            const startXEmail = (doc.internal.pageSize.getWidth() - totalEmailWidth) / 2;
+
+
+
+            doc.setTextColor(0, 0, 0);
+
+            doc.text(emailLabel, startXEmail, yPosEmail);
+
+
+
+            doc.setTextColor(0, 0, 128); // Navy Blue
+
+            doc.text(emailValue, startXEmail + emailLabelWidth, yPosEmail);
+
+
+
+            // Address line
+
+            const addressLabel = "Address : ";
+
+            const addressValue = "Gulshan Ahmad Town Near Baba Ghulam Rasool Darbar Okara";
+
+            const yPosAddress = 30;
+
+            doc.setFontSize(fontSizeContact);
+
+
+
+            doc.setFont('helvetica', 'bold');
+
+            const labelWidth = doc.getStringUnitWidth(addressLabel) * fontSizeContact / doc.internal.scaleFactor;
+
+
+
+            doc.setFont('helvetica', 'normal');
+
+            const valueWidth = doc.getStringUnitWidth(addressValue) * fontSizeContact / doc.internal.scaleFactor;
+
+           
+
+            const totalWidth = labelWidth + valueWidth;
+
+            const startX = (doc.internal.pageSize.getWidth() - totalWidth) / 2;
+
+
+
+            doc.setTextColor(0, 0, 0);
+
+           
+
+            doc.setFont('helvetica', 'bold');
+
+            doc.text(addressLabel, startX, yPosAddress);
+
+
+
+            doc.setFont('helvetica', 'normal');
+
+            doc.text(addressValue, startX + labelWidth, yPosAddress);
+
+
+
+            doc.setLineWidth(0.2);
+
+            doc.line(15, 34, 195, 34);
+
+
+
+            // --- Patient Information Section ---
+
+            const patientInfoY = 45;
+
+            doc.setFontSize(11);
+
+           
+
+            doc.setTextColor(0, 0, 0);
+
+            doc.setFont('helvetica', 'bold');
+
+            doc.text("Patient Name:", 15, patientInfoY);
+
+            doc.text("Collection Date:", 110, patientInfoY);
+
+            doc.text("Age / Gender:", 15, patientInfoY + 8);
+
+            doc.text("Report Date:", 110, patientInfoY + 8);
+
+            doc.text("Referring Doctor:", 15, patientInfoY + 16);
+
+
+
+            doc.setFont('helvetica', 'normal');
+
+            doc.text(patientName, 50, patientInfoY);
+
+            doc.text(collectionDate, 145, patientInfoY);
+
+            doc.text(`${patientAge} / ${patientGender}`, 50, patientInfoY + 8);
+
+            doc.text(reportDate, 145, patientInfoY + 8);
+
+            doc.text(`Dr. ${referringDoctor}`, 50, patientInfoY + 16);
+
+
+
+            const tableLineY = patientInfoY + 22;
+
+            doc.setLineWidth(0.2);
+
+            doc.line(15, tableLineY, 195, tableLineY);
+
+
+
+            // --- Prepare Test Results Table Data ---
+
+            const tableHead = [['Test Name', 'Result', 'Unit', 'Reference Range']];
+
+            const tableBody = [];
+
+            document.querySelectorAll('.test-row').forEach(row => {
+
+                const testName = row.querySelector('[name="test-name"]').value;
+
+                const testResult = row.querySelector('[name="test-result"]').value;
+
+                const testUnit = row.querySelector('[name="test-unit"]').value;
+
+                const testRange = row.querySelector('[name="test-range"]').value;
+
+                tableBody.push([testName, testResult, testUnit, testRange]);
+
+            });
+
+
+
+            // --- Generate Table with Per-Page Footer and Custom Styling ---
+
+            doc.autoTable({
+
+                startY: tableLineY + 3,
+
+                head: tableHead,
+
+                body: tableBody,
+
+                theme: 'grid',
+
+                headStyles: { fillColor: [79, 70, 229] }, // Indigo header
+
+                didParseCell: function (data) {
+
+                    if (data.section === 'body') {
+
+                        if (data.column.index === 0 || data.column.index === 3) {
+
+                            data.cell.styles.fontStyle = 'bold';
+
+                        }
+
+                    }
+
+                },
+
+                didDrawPage: (data) => {
+
+                    addFooter();
+
+                }
+
+            });
+
+
+
+            // --- Save the PDF ---
+
+            doc.save(`Medical_Report_${patientName.replace(/ /g, '_')}.pdf`);
+
+        }
+
+    </script>
+
+</body>
+
+</html>
